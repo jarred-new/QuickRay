@@ -10,6 +10,10 @@
     ".cpp": {
       "enabled": true,
       "run": "clangd"
+    },
+    ".yml": {
+      "enabled": true,
+      "run": "yaml-language-server --stdio"
     }
   }
 }

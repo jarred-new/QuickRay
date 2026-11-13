@@ -1,0 +1,51 @@
+
+name: Build raylib Windows (MSVC)
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Setup CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Build raylib
+        shell: cmd
+        run: |
+          git clone --depth 1 https://github.com/raysan5/raylib.git raylib
+          cmake -S raylib -B raylib/build -A x64 ^
+            -DBUILD_SHARED_LIBS=OFF ^
+            -DBUILD_EXAMPLES=OFF
+          cmake --build raylib/build --config Release
+
+      - name: Configure project
+        shell: cmd
+        run: |
+          cmake -S . -B build -A x64 ^
+            -DCMAKE_BUILD_TYPE=Release ^
+            -DCMAKE_PREFIX_PATH="${{ github.workspace }}/raylib/build"
+
+      - name: Build project
+        run: cmake --build build --config Release
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: raylib-windows-x64
+          path: build/Release/*.exe
+          if-no-files-found: error
