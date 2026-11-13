@@ -14,6 +14,10 @@
     ".yml": {
       "enabled": true,
       "run": "yaml-language-server --stdio"
+    },
+    ".h": {
+      "enabled": true,
+      "run": "clangd"
     }
   }
 }
