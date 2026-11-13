@@ -1,0 +1,15 @@
+{
+  "plugin": "org.smartide.plugin.framework.cpp.raylib",
+  "run": "c++ main.cpp -o app -lraylib && ./app",
+  "gui": true,
+  "intelligence": {
+    ".json": {
+      "enabled": true,
+      "run": "vscode-json-language-server --stdio"
+    },
+    ".cpp": {
+      "enabled": true,
+      "run": "clangd"
+    }
+  }
+}
