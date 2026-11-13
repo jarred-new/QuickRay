@@ -29,6 +29,7 @@ int main() {
 
         DrawText("QuickRay", 20, 20, 24, GREEN);
         DrawText("Untitled", 20, 50, 18, LIGHTGRAY);
+        DrawFPS(20, 80);
 
         EndDrawing();
     }
