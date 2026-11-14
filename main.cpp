@@ -1,11 +1,14 @@
 // Build & run: c++ main.cpp -o app -lraylib && ./app
 // Note: needs a display. Opens an 800x450 window until closed.
-#include <stdio.h>
-#include <stdlib.h> // for console
+#include "filepicker.h"
 
 #include "raylib.h" // raylib library
 
 int main() {
+    char* filePath = "";
+    
+    pick(filePath);
+    
     InitWindow(800, 450, "QuickRay");
     
     Camera3D camera = { 0 };

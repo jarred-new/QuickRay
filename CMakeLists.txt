@@ -17,6 +17,7 @@ add_subdirectory(raylib)
 # QuickRay executable
 add_executable(QuickRay
     main.cpp
+    filepicker.h
 )
 
 # Link raylib
