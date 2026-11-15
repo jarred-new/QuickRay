@@ -5,15 +5,22 @@
 #include <fstream>
 #include <string>
 
-void pick(char* v) {
-    if (v == nullptr) {
-        return;
-    }
+std::string pickModelPath() {
+    std::string filePath;
+    std::cout << "Enter the path to the 3D model (.obj, .glb, .gltf): ";
     
-    std::cout << "Enter your model filename: ";
-    if (!(std::cin >> v)) {
-        return;
+    if (!std::getline(std::cin >> std::ws, filePath)) {
+        std::cerr << "\nInput stream closed. Exiting.\n";
+        std::exit(1);
     }
+
+    // Validate that the file exists and is not a folder
+    if (!std::filesystem::exists(filePath) || !std::filesystem::is_regular_file(filePath)) {
+        std::cerr << "Error: File not found. Please try again.\n\n";
+        return pickModelPath(); // Recursive call
+    }
+
+    return filePath;
 }
 
 #endif // FILEPICKER_H
