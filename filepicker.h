@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <filesystem>
 
 std::string pickModelPath() {
     std::string filePath;
