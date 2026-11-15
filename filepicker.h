@@ -8,23 +8,21 @@
 
 std::string pickModelPath() {
     std::string filePath;
-    std::cout << "Enter the path to the 3D model (.obj, .glb, .gltf): ";
+    std::cout << "Enter cube, sphere, or a 3D model path (.obj, .glb, .gltf): ";
     
     if (!std::getline(std::cin >> std::ws, filePath)) {
         std::cerr << "\nInput stream closed. Exiting.\n";
         std::exit(1);
     }
 
+    if (filePath == "cube" || filePath == "sphere") {
+        return filePath;
+    }
+
     // Validate that the file exists and is not a folder
     if (!std::filesystem::exists(filePath) || !std::filesystem::is_regular_file(filePath)) {
         std::cerr << "Error: File not found. Please try again.\n\n";
         return pickModelPath(); // Recursive call
-    }
-    else if (filePath == "cube") {
-        return "cube"; // Return "cube" for cube model
-    }
-    else if (filePath == "sphere") {
-        return "sphere"; // Return "sphere" for sphere model
     }
     else {
         std::string extension = std::filesystem::path(filePath).extension().string();
