@@ -1,7 +1,25 @@
 #include "filepicker.h"
+#include "arguments.h"
 #include "raylib.h" // raylib library
 
-int main() {
+#include <cstdlib>
+#include <string>
+
+int main(int argc, char* argv[]) {
+    AppOptions options;
+    const ArgumentParseResult argumentResult = parseArguments(argc, argv, options);
+    if (argumentResult == ArgumentParseResult::Error) {
+        return EXIT_FAILURE;
+    }
+    if (argumentResult == ArgumentParseResult::Help) {
+        return EXIT_SUCCESS;
+    }
+
+    float modelScale = options.modelScale;
+    Color modelTint = options.modelTint;
+    int selectedColor = options.selectedColor;
+    int selectedCamera = options.selectedCamera;
+
     std::string filepath = pickModelPath();
     
     InitWindow(800, 450, "QuickRay");
@@ -19,16 +37,6 @@ int main() {
     // Model position
     Vector3 modelPosition = { 0.0f, 0.0f, 0.0f };
 
-    // Model scale
-    float modelScale = 1.0f;
-
-    // Model Color tint and selection
-    Color modelTint = WHITE;
-    int selectedColor = 0;
-
-    // Camera Selection
-    int selectedCamera = CAMERA_FREE; // 0: Free, 1: Orbit, 2: First Person, 3: Third Person
-    
     SetTargetFPS(120);
 
     DisableCursor();
@@ -42,7 +50,8 @@ int main() {
         BeginMode3D(camera);
             DrawGrid(20, 1.0f);
             if (filepath == "" || filepath == "cube") {
-                DrawCube(modelPosition, 2.0, 2.0, 2.0, modelTint); // Draw cube if no model is loaded as default or "cube" is selected
+                DrawCube(modelPosition, 2.0f * modelScale, 2.0f * modelScale,
+                         2.0f * modelScale, modelTint);
             }
             else if (filepath == "sphere") {
                 DrawSphere(modelPosition, modelScale, modelTint); // Draw sphere if no model is loaded
