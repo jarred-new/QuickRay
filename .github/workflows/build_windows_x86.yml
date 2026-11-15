@@ -1,5 +1,5 @@
 
-name: Build QuickRay Windows (MSVC)
+name: Build QuickRay Windows (MSVC x86)
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
       - name: Setup MSVC
         uses: ilammy/msvc-dev-cmd@v1
         with:
-          arch: x64
+          arch: x86
 
       - name: Download raylib
         run: |
@@ -27,7 +27,7 @@ jobs:
 
       - name: Configure QuickRay
         run: |
-          cmake -S . -B build -A x64
+          cmake -S . -B build -A x86
 
       - name: Compile QuickRay
         run: |
@@ -36,7 +36,7 @@ jobs:
       - name: Upload executable
         uses: actions/upload-artifact@v7
         with:
-          name: QuickRay-Windows-x64
+          name: QuickRay-Windows-x86
           path: build/Release/
           if-no-files-found: error
           archive: false

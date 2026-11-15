@@ -1,0 +1,42 @@
+
+name: Build QuickRay Windows (MSVC x64)
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Download raylib
+        run: |
+          git clone --depth 1 https://github.com/raysan5/raylib.git raylib
+
+      - name: Configure QuickRay
+        run: |
+          cmake -S . -B build -A x64
+
+      - name: Compile QuickRay
+        run: |
+          cmake --build build --config Release
+
+      - name: Upload executable
+          uses: actions/upload-artifact@v7
+          with:
+            name: QuickRay-Windows-x64
+            path: build/Release/
+            if-no-files-found: error
+            archive: false
