@@ -24,7 +24,9 @@ int main() {
     // Model scale
     float modelScale = 1.0f;
     
-    SetTargetFPS(60);
+    SetTargetFPS(120);
+
+    DisableCursor();
     
     while (!WindowShouldClose()) {
         UpdateCamera(&camera, CAMERA_FREE);
@@ -42,9 +44,15 @@ int main() {
             } 
         EndMode3D();
 
+        if (IsKeyPressed(KEY_O)) {
+            filepath = pickModelPath();
+            model = LoadModel(filepath.c_str());
+        }
+
         DrawText("QuickRay", 20, 20, 24, GREEN);
-        DrawText("Untitled", 20, 50, 18, LIGHTGRAY);
-        DrawFPS(20, 80);
+        DrawText(filepath.c_str(), 20, 50, 18, LIGHTGRAY);
+        DrawText("Press O to open file", 20, 80, 18, LIGHTGRAY);
+        DrawFPS(20, 110);
 
         EndDrawing();
     }

@@ -1,3 +1,5 @@
 .idea/
 .si.json
 app
+build/
+raylib/
