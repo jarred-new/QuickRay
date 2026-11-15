@@ -27,13 +27,16 @@ int main() {
     // Model Color tint and selection
     Color modelTint = WHITE;
     int selectedColor = 0;
+
+    // Camera Selection
+    int selectedCamera = 0; // 0: Free, 1: Orbit, 2: First Person, 3: Third Person
     
     SetTargetFPS(120);
 
     DisableCursor();
     
     while (!WindowShouldClose()) {
-        UpdateCamera(&camera, CAMERA_FREE);
+        UpdateCamera(&camera, static_cast<CameraMode>(selectedCamera));
 
         BeginDrawing();
         ClearBackground(BLACK);
@@ -70,10 +73,17 @@ int main() {
             modelScale -= 0.1f;
         }
 
+        if (IsKeyPressed(KEY_ONE)) { selectedCamera = CAMERA_FREE; } // Free camera
+        if (IsKeyPressed(KEY_TWO)) { selectedCamera = CAMERA_ORBITAL; } // Orbit camera
+        if (IsKeyPressed(KEY_THREE)) { selectedCamera = CAMERA_FIRST_PERSON; } // First Person camera
+        if (IsKeyPressed(KEY_FOUR)) { selectedCamera = CAMERA_THIRD_PERSON; } // Third Person camera
+
         DrawText("QuickRay", 20, 20, 24, GREEN);
         DrawText(filepath.c_str(), 20, 50, 18, LIGHTGRAY);
-        DrawText("Press O to open file, C to change color, + to increase scale, - to decrease scale", 20, 80, 12, LIGHTGRAY);
-        DrawFPS(20, 110);
+        DrawText("Press O to open file, C to change color,", 20, 80, 12, LIGHTGRAY);
+        DrawText("+ or - to scale model", 20, 100, 12, LIGHTGRAY);
+        DrawText("Press 1-4 to change camera mode", 20, 120, 12, LIGHTGRAY);
+        DrawFPS(20, 135);
 
         EndDrawing();
     }
