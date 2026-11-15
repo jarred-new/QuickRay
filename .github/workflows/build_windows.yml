@@ -39,3 +39,4 @@ jobs:
           name: QuickRay-Windows-x64
           path: build/Release/
           if-no-files-found: error
+          archive: false
