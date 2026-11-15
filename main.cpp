@@ -27,7 +27,7 @@ int main() {
     SetTargetFPS(60);
     
     while (!WindowShouldClose()) {
-        UpdateCamera(&camera, CAMERA_ORBITAL);
+        UpdateCamera(&camera, CAMERA_FREE);
 
         BeginDrawing();
         ClearBackground(BLACK);
@@ -38,7 +38,7 @@ int main() {
                 DrawCube(modelPosition, 2.0, 2.0, 2.0, GREEN);
             }
             else {
-                DrawModel(model, modelPosition, modelScale, GREEN);
+                DrawModel(model, modelPosition, modelScale, WHITE);
             } 
         EndMode3D();
 
