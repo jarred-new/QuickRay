@@ -20,6 +20,19 @@ std::string pickModelPath() {
         std::cerr << "Error: File not found. Please try again.\n\n";
         return pickModelPath(); // Recursive call
     }
+    else if (filePath == "cube") {
+        return "cube"; // Return "cube" for cube model
+    }
+    else if (filePath == "sphere") {
+        return "sphere"; // Return "sphere" for sphere model
+    }
+    else {
+        std::string extension = std::filesystem::path(filePath).extension().string();
+        if (extension != ".obj" && extension != ".glb" && extension != ".gltf") {
+            std::cerr << "Error: Invalid file type. Please select a .obj, .glb, or .gltf file.\n\n";
+            return pickModelPath(); // Recursive call
+        }
+    }
 
     return filePath;
 }

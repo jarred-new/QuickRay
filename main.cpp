@@ -41,8 +41,14 @@ int main() {
 
         BeginMode3D(camera);
             DrawGrid(20, 1.0f);
-            if (filepath == "") {
-                DrawCube(modelPosition, 2.0, 2.0, 2.0, GREEN);
+            if (filepath == "" || filepath == "cube") {
+                DrawCube(modelPosition, 2.0, 2.0, 2.0, modelTint); // Draw cube if no model is loaded as default or "cube" is selected
+            }
+            else if (filepath == "sphere") {
+                DrawSphere(modelPosition, modelScale, modelTint); // Draw sphere if no model is loaded
+            }
+            else if (model.meshCount == 0) { // model count error on null or empty
+                DrawText("Error: Model has no meshes to draw.", 10, 10, 20, RED);
             }
             else {
                 DrawModel(model, modelPosition, modelScale, modelTint);
