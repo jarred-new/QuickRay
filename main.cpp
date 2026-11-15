@@ -26,7 +26,7 @@ int main() {
 
     // Model Color tint and selection
     Color modelTint = WHITE;
-    int selectedColor = 0;
+    int selectedColor = CAMERA_FREE;
 
     // Camera Selection
     int selectedCamera = 0; // 0: Free, 1: Orbit, 2: First Person, 3: Third Person
