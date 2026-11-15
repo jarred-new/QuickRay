@@ -1,5 +1,3 @@
-// Build & run: c++ main.cpp -o app -lraylib && ./app
-// Note: needs a display. Opens an 800x450 window until closed.
 #include "filepicker.h"
 #include "raylib.h" // raylib library
 
