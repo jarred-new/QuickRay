@@ -28,7 +28,7 @@ jobs:
 
       - name: Configure QuickRay
         run: |
-          cmake -S . -B build -A x86
+          cmake -S . -B build -A Win32
 
       - name: Compile QuickRay
         run: |
@@ -40,7 +40,6 @@ jobs:
           name: QuickRay-Windows-x86
           path: build/Release/
           if-no-files-found: error
-          archive: false
 
       - name: Rename executable for release
         run: |
