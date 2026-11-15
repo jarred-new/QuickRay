@@ -23,6 +23,10 @@ int main() {
 
     // Model scale
     float modelScale = 1.0f;
+
+    // Model Color tint and selection
+    Color modelTint = WHITE;
+    int selectedColor = 0;
     
     SetTargetFPS(120);
 
@@ -40,7 +44,7 @@ int main() {
                 DrawCube(modelPosition, 2.0, 2.0, 2.0, GREEN);
             }
             else {
-                DrawModel(model, modelPosition, modelScale, WHITE);
+                DrawModel(model, modelPosition, modelScale, modelTint);
             } 
         EndMode3D();
 
@@ -49,9 +53,26 @@ int main() {
             model = LoadModel(filepath.c_str());
         }
 
+        if (IsKeyPressed(KEY_C)) {  
+            selectedColor = (selectedColor + 1) % 4; // Cycle through 4 colors
+            switch (selectedColor) {
+                case 0: modelTint = WHITE; break;
+                case 1: modelTint = RED; break;
+                case 2: modelTint = GREEN; break;
+                case 3: modelTint = BLUE; break;
+            }
+        }
+        
+        if (IsKeyPressed(KEY_EQUAL)) { // '+' key to increase scale
+            modelScale += 0.1f;
+        }
+        if (IsKeyPressed(KEY_MINUS)) { // '-' key to decrease scale
+            modelScale -= 0.1f;
+        }
+
         DrawText("QuickRay", 20, 20, 24, GREEN);
         DrawText(filepath.c_str(), 20, 50, 18, LIGHTGRAY);
-        DrawText("Press O to open file", 20, 80, 18, LIGHTGRAY);
+        DrawText("Press O to open file, C to change color, + to increase scale, - to decrease scale", 20, 80, 12, LIGHTGRAY);
         DrawFPS(20, 110);
 
         EndDrawing();
