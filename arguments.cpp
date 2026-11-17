@@ -8,17 +8,32 @@
 
 void printUsage(const char* executable) {
     std::cout << "Usage: " << executable
-              << " [--color white|red|green|blue]"
+              << " [model-filepath]"
+                 " [--color white|red|green|blue]"
                  " [--size positive-number]"
                  " [--camera free|orbital|first-person|third-person]\n";
 }
 
 ArgumentParseResult parseArguments(int argc, char* argv[], AppOptions& options) {
+    bool modelPathSet = false;
+
     for (int i = 1; i < argc; ++i) {
         const std::string argument = argv[i];
         if (argument == "--help" || argument == "-h") {
             printUsage(argv[0]);
             return ArgumentParseResult::Help;
+        }
+
+        if (argument[0] != '-') {
+            if (modelPathSet) {
+                std::cerr << "Error: Unexpected positional argument '" << argument << "'.\n";
+                printUsage(argv[0]);
+                return ArgumentParseResult::Error;
+            }
+
+            options.modelFilePath = argument;
+            modelPathSet = true;
+            continue;
         }
 
         if (argument == "--color") {
