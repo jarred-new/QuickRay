@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
     int selectedColor = options.selectedColor;
     int selectedCamera = options.selectedCamera;
 
-    std::string filepath = pickModelPath();
+    std::string filepath = options.modelFilePath.empty() ? pickModelPath() : options.modelFilePath;
     
     InitWindow(800, 450, "QuickRay");
     
