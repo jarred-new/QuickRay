@@ -1,8 +1,10 @@
 #include "arguments.h"
+#include "filepicker.h"
 
 #include <cerrno>
 #include <cmath>
 #include <cstdlib>
+#include <filesystem>
 #include <iostream>
 #include <string>
 
@@ -27,6 +29,13 @@ ArgumentParseResult parseArguments(int argc, char* argv[], AppOptions& options) 
         if (argument[0] != '-') {
             if (modelPathSet) {
                 std::cerr << "Error: Unexpected positional argument '" << argument << "'.\n";
+                printUsage(argv[0]);
+                return ArgumentParseResult::Error;
+            }
+
+            if (!isValidModelInput(argument)) {
+                std::cerr << "Error: Invalid model path '" << argument
+                          << "'. Use a valid .obj, .glb, .gltf file or 'cube'/'sphere'.\n";
                 printUsage(argv[0]);
                 return ArgumentParseResult::Error;
             }
